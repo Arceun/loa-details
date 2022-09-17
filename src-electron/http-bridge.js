@@ -44,14 +44,15 @@ export function setupBridge(appSettings) {
     }
   });
 
-  httpServer.listen(0, "localhost", () => {
+  httpServer.listen(1338, "localhost", () => {
     log.info(`Server listening on port ${httpServer.address().port}`);
     validHosts.push(
       `localhost:${httpServer.address().port}`,
-      `127.0.0.1:${httpServer.address().port}`
+      `127.0.0.1:${httpServer.address().port}`,
+      `host.docker.internal:${httpServer.address().port}`
     );
     httpServerEventEmitter.emit("listen");
-    spawnPacketCapturer(appSettings, httpServer.address().port);
+    // spawnPacketCapturer(appSettings, httpServer.address().port);
   });
 }
 

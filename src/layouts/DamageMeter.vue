@@ -146,7 +146,11 @@
           : '64'
       }px)`"
       :name-display="
-        settingsStore?.settings?.damageMeter?.functionality?.nameDisplayV2
+        isTakingScreenshot
+          ? hideNamesOnScreenshot
+            ? 'gear+class'
+            : 'name+gear+class'
+          : 'name+gear+class'
       "
     />
 
@@ -278,7 +282,9 @@ function toggleFightPause() {
 
 const damageMeterRef = ref(null);
 const isTakingScreenshot = ref(false);
-async function takeScreenshot() {
+const hideNamesOnScreenshot = ref(false);
+async function takeScreenshot(hideNames = true) {
+  hideNamesOnScreenshot.value = hideNames;
   isTakingScreenshot.value = true;
   await sleep(600);
 
