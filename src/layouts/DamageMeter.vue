@@ -87,16 +87,27 @@
         </div>
       </div>
       <div v-if="!isTakingScreenshot" style="margin-left: auto">
-        <q-btn
+        <q-btn-dropdown
           v-if="!isMinimized"
+          split
           round
           icon="screenshot_monitor"
-          @click="takeScreenshot"
+          @click="takeScreenshot()"
           flat
           size="sm"
         >
-          <q-tooltip> Take a screenshot of the damage meter </q-tooltip>
-        </q-btn>
+          <q-list>
+              <q-item
+                clickable
+                v-close-popup
+                @click="takeScreenshot(hideNames = false)"
+              >
+                <q-item-section>
+                  <q-item-label>Screenshot With Names</q-item-label>
+                </q-item-section>
+              </q-item>
+            </q-list>
+        </q-btn-dropdown>
         <q-btn
           v-if="!isMinimized"
           round
@@ -131,7 +142,6 @@
       </div>
       <span v-else class="watermark-box">
         <img class="watermark-logo" :src="logoImg" />
-        github.com/karaeren/loa-details
       </span>
     </nav>
 
@@ -162,12 +172,12 @@
         <q-btn flat size="sm" @click="damageType = 'tank'" label="TANK">
           <q-tooltip> Show damage taken </q-tooltip>
         </q-btn>
-        <q-btn flat size="sm" @click="damageType = 'heal'" label="HEAL">
+        <!-- <q-btn flat size="sm" @click="damageType = 'heal'" label="HEAL">
           <q-tooltip> Show healing done </q-tooltip>
-        </q-btn>
-        <q-btn flat size="sm" @click="damageType = 'shield'" label="SHIELD">
+        </q-btn> -->
+        <!-- <q-btn flat size="sm" @click="damageType = 'shield'" label="SHIELD">
           <q-tooltip> Show shield done </q-tooltip>
-        </q-btn>
+        </q-btn> -->
       </div>
 
       <div style="margin-left: auto">
