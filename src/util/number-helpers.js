@@ -22,6 +22,10 @@ export function numberFormat(n) {
   return new Intl.NumberFormat("en-US").format(n);
 }
 
+export function array2ToString(n) {
+  return n.join("");
+}
+
 // returns an array with 2 values based on its abbreviation
 // ex: 123456 => [123, "k"]
 export function abbreviateNumber(n) {

@@ -68,21 +68,21 @@
             style="margin-right: 12px"
           >
             Total DMG
-            {{ numberFormat(sessionState.damageStatistics.totalDamageDealt) }}
+            {{ array2ToString(abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)) }}
           </span>
           <span
             v-if="settingsStore.settings.damageMeter.header.dps.enabled"
             style="margin-right: 12px"
           >
             Total DPS
-            {{ numberFormat(sessionDPS) }}
+            {{ array2ToString(abbreviateNumber(sessionDPS)) }}
           </span>
           <span
             v-if="settingsStore.settings.damageMeter.header.tank.enabled"
             style="margin-right: 12px"
           >
             Total TNK
-            {{ numberFormat(sessionState.damageStatistics.totalDamageTaken) }}
+            {{ array2ToString(abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)) }}
           </span>
         </div>
       </div>
@@ -213,6 +213,7 @@ import {
   numberFormat,
   millisToMinutesAndSeconds,
   abbreviateNumber,
+  array2ToString,
 } from "src/util/number-helpers";
 import { sleep } from "src/util/sleep";
 import html2canvas from "html2canvas";
