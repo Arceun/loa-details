@@ -68,21 +68,24 @@
             style="margin-right: 12px"
           >
             Total DMG
-            {{ array2ToString(abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)) }}
+            {{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[0]
+              }}{{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[1] }}
           </span>
           <span
             v-if="settingsStore.settings.damageMeter.header.dps.enabled"
             style="margin-right: 12px"
           >
             Total DPS
-            {{ array2ToString(abbreviateNumber(sessionDPS)) }}
+            {{ abbreviateNumber(sessionDPS)[0]
+              }}{{ abbreviateNumber(sessionDPS)[1] }}
           </span>
           <span
             v-if="settingsStore.settings.damageMeter.header.tank.enabled"
             style="margin-right: 12px"
           >
             Total TNK
-            {{ array2ToString(abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)) }}
+            {{ abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)[0]
+              }}{{ abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)[1] }}
           </span>
         </div>
       </div>
@@ -220,10 +223,8 @@
 import { onMounted, ref } from "vue";
 import { Notify } from "quasar";
 import {
-  numberFormat,
   millisToMinutesAndSeconds,
   abbreviateNumber,
-  array2ToString,
 } from "src/util/number-helpers";
 import { sleep } from "src/util/sleep";
 import html2canvas from "html2canvas";
@@ -353,6 +354,7 @@ onMounted(() => {
   window.messageApi.send("window-to-main", { message: "get-settings" });
 
   window.messageApi.receive("pcap-on-state-change", (value) => {
+
     sessionState.value = value;
 
     if (
@@ -363,7 +365,8 @@ onMounted(() => {
         sessionState.value.damageStatistics.totalDamageDealt /
         (fightDuration.value / 1000)
       ).toFixed(0);
-  });
+    });
+
 
   window.messageApi.receive("pcap-on-reset-state", (value) => {
     isFightPaused.value = false;
