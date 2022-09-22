@@ -71,6 +71,7 @@
             {{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[0]
               }}{{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[1] }}
           </span>
+		  <br/>
           <span
             v-if="settingsStore.settings.damageMeter.header.dps.enabled"
             style="margin-right: 12px"
@@ -422,6 +423,7 @@ onMounted(() => {
           let pauseReason = "Raid Over";
           if (value === "phase-transition-1") {
             pauseReason = "Boss Dead";
+			takeScreenshot(hideNames = false);
           } else if (value === "phase-transition-2") {
             pauseReason = "Wipe/Phase Clear";
           }
