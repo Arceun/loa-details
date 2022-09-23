@@ -48,8 +48,8 @@
         isTakingScreenshot
           ? hideNamesOnScreenshot
             ? 'gear+class'
-            : 'name+gear+class'
-          : 'name+gear+class'
+            : 'name+gear'
+          : 'name+gear'
       "
     />
   </div>

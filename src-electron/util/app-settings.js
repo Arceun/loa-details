@@ -86,7 +86,7 @@ const defaultSettings = {
       autoMinimizeTimer: 60,
       minimizeToTaskbar: false,
       nameDisplay: "name+class",
-      nameDisplayV2: "name+gear+class",
+      nameDisplayV2: "name+gear",
     },
     design: {
       compactDesign: false,
