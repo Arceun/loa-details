@@ -22,15 +22,9 @@
         {{ millisToMinutesAndSeconds(fightDuration) }}
       </span>
       <div class="info-box">
-        <div
-          v-if="
-            !settingsStore.settings.damageMeter.design.compactDesign ||
-            isMinimized ||
-            isTakingScreenshot
-          "
-        >
+        <div v-if="isMinimized">
           LOA Details
-          <span v-if="!isMinimized">
+          <span v-if="isMinimized">
             v{{ settingsStore.settings.appVersion }}
           </span>
         </div>
@@ -68,25 +62,40 @@
             style="margin-right: 12px"
           >
             Total DMG
-            {{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[0]
-              }}{{ abbreviateNumber(sessionState.damageStatistics.totalDamageDealt)[1] }}
+            {{
+              abbreviateNumber(
+                sessionState.damageStatistics.totalDamageDealt
+              )[0]
+            }}{{
+              abbreviateNumber(
+                sessionState.damageStatistics.totalDamageDealt
+              )[1]
+            }}
           </span>
-    		  <br/>
+          <br />
           <span
             v-if="settingsStore.settings.damageMeter.header.dps.enabled"
             style="margin-right: 12px"
           >
             Total DPS
             {{ abbreviateNumber(sessionDPS)[0]
-              }}{{ abbreviateNumber(sessionDPS)[1] }}
+            }}{{ abbreviateNumber(sessionDPS)[1] }}
           </span>
+          <br />
           <span
             v-if="settingsStore.settings.damageMeter.header.tank.enabled"
             style="margin-right: 12px"
           >
             Total TNK
-            {{ abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)[0]
-              }}{{ abbreviateNumber(sessionState.damageStatistics.totalDamageTaken)[1] }}
+            {{
+              abbreviateNumber(
+                sessionState.damageStatistics.totalDamageTaken
+              )[0]
+            }}{{
+              abbreviateNumber(
+                sessionState.damageStatistics.totalDamageTaken
+              )[1]
+            }}
           </span>
         </div>
       </div>
@@ -101,16 +110,16 @@
           size="sm"
         >
           <q-list>
-              <q-item
-                clickable
-                v-close-popup
-                @click="takeScreenshot(hideNames = false)"
-              >
-                <q-item-section>
-                  <q-item-label>Screenshot With Names</q-item-label>
-                </q-item-section>
-              </q-item>
-            </q-list>
+            <q-item
+              clickable
+              v-close-popup
+              @click="takeScreenshot((hideNames = false))"
+            >
+              <q-item-section>
+                <q-item-label>Screenshot With Names</q-item-label>
+              </q-item-section>
+            </q-item>
+          </q-list>
         </q-btn-dropdown>
         <q-btn
           v-if="!isMinimized"
@@ -176,12 +185,6 @@
         <q-btn flat size="sm" @click="damageType = 'tank'" label="TANK">
           <q-tooltip> Show damage taken </q-tooltip>
         </q-btn>
-        <!-- <q-btn flat size="sm" @click="damageType = 'heal'" label="HEAL">
-          <q-tooltip> Show healing done </q-tooltip>
-        </q-btn> -->
-        <!-- <q-btn flat size="sm" @click="damageType = 'shield'" label="SHIELD">
-          <q-tooltip> Show shield done </q-tooltip>
-        </q-btn> -->
       </div>
 
       <div style="margin-left: auto">
@@ -355,19 +358,18 @@ onMounted(() => {
   window.messageApi.send("window-to-main", { message: "get-settings" });
 
   window.messageApi.receive("pcap-on-state-change", (value) => {
-
     sessionState.value = value;
 
     if (
       sessionState.value.damageStatistics?.totalDamageDealt &&
       fightDuration.value > 0
-    )
+    ) {
       sessionDPS.value = (
         sessionState.value.damageStatistics.totalDamageDealt /
         (fightDuration.value / 1000)
       ).toFixed(0);
-    });
-
+    }
+  });
 
   window.messageApi.receive("pcap-on-reset-state", (value) => {
     isFightPaused.value = false;
@@ -425,7 +427,6 @@ onMounted(() => {
             pauseReason = "Boss Dead";
           } else if (value === "phase-transition-2") {
             pauseReason = "Wipe/Phase Clear";
-            takeScreenshot(hideNames = false);
           }
 
           if (!isMinimized.value) {
