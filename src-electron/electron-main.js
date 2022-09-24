@@ -206,7 +206,7 @@ function startApplication() {
   } */
 
   mainWindow = createMainWindow(appSettings);
-  damageMeterWindow = createDamageMeterWindow(logParser, appSettings);
+  damageMeterWindow = null; //createDamageMeterWindow(logParser, appSettings);
 
   initializeShortcuts(appSettings);
 
